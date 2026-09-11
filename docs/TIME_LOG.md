@@ -11,6 +11,7 @@
 | Synthetic development photo generation and label QA | 0:08 |
 | Three live API runs, result validation and cost measurement | 0:04 |
 | Browser QA, repeat-upload fix, repository, deployment and backup walkthrough | 0:18 |
+| Production 413 diagnosis, upload compression, redeploy and smoke test | 0:12 |
 | Real phone-photo run and candidate-recorded video | Pending |
 
 Only active implementation time is counted. Waiting for installs, model responses, deployment and user photography is excluded. These entries record the accelerated Codex-assisted implementation wall time rather than a hypothetical manual estimate.

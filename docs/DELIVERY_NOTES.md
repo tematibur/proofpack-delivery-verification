@@ -25,7 +25,7 @@ Corrected delivery:
 
 ## Actual results
 
-The three measured runs below use the five AI-generated development fixtures under `sample-data/synthetic/`. Raw API responses are committed under `sample-data/results/`. The fixtures are disclosed as synthetic and do not replace the required real controlled photographs.
+The measured runs below use the five AI-generated development fixtures under `sample-data/synthetic/`. Raw API responses, including the production smoke test, are committed under `sample-data/results/`. The fixtures are disclosed as synthetic and do not replace the required real controlled photographs.
 
 | Case | Expected | Actual | Evidence/source check | Pass? |
 | --- | --- | --- | --- | --- |
@@ -47,7 +47,8 @@ Pricing assumption used in code for the default `gpt-5.6-luna`: $0.20 per millio
 | Initial delivery | 19.36 s | 7,996 | 1,351 | 0 | $0.0032 |
 | Corrected delivery | 14.90 s | 6,114 | 971 | 0 | $0.0024 |
 | Ambiguous single view | 17.09 s | 4,232 | 1,369 | 0 | $0.0025 |
-| **Measured total** | **51.35 s** | **18,342** | **3,691** | **0** | **$0.0081** |
+| Production smoke after payload fix | 10.05 s | 7,996 | 971 | 0 | $0.0028 |
+| **Measured total** | **61.40 s** | **26,338** | **4,662** | **0** | **$0.0109** |
 
 Speech cost: $0.00 because the selected product workflow starts from existing documents and photographs, not voice. Paid intermediary cost: $0.00. Hosting is separate: the Vercel deployment produced no observed incremental charge under the existing account; future usage depends on that account's plan and is not included in per-operation inference cost.
 
@@ -68,17 +69,18 @@ Own work: capture protocol, prompt and JSON schema, result validator, evidence o
 
 ## What failed or remains limited
 
-- Live multimodal inference passed on all three synthetic cases. The generated photos are development fixtures, not proof of physical contents.
+- Live multimodal inference passed on all three synthetic cases, and the deployed browser flow returned the expected result in a separate production smoke test. The generated photos are development fixtures, not proof of physical contents.
+- The first production smoke attempt returned HTTP `413` because the three source PNGs exceeded Vercel's request-body limit; it failed before reaching OpenAI and therefore incurred no inference cost. The browser now converts large source photos into bounded JPEG uploads, and the repeated request returned HTTP `200` with no browser-console errors.
 - A short real phone-photo capture is still required before an honest hiring submission.
 - Vision-model bounding boxes are approximate and should be treated as evidence pointers.
-- The prototype has no automatic retries, image preprocessing, persistent history, warehouse integration or supplier workflow.
+- The prototype has no automatic retries, persistent history, warehouse integration or supplier workflow.
 - The public demo has a best-effort limit of 12 valid runs per IP per hour; the counter can reset on a serverless cold start.
 - Count verification intentionally declines when UNIT labels do not support deduplication.
 - The generated 1:25 walkthrough uses synthetic narration. A short candidate-recorded voiceover would better demonstrate personal product judgment.
 
 ## Time spent
 
-Focused implementation time recorded in `docs/TIME_LOG.md`: 52 minutes. End-to-end elapsed time was approximately 1 hour 45 minutes including model generation, builds, authentication and deployment waits. A real phone-photo capture and an optional candidate-recorded replacement voiceover are not included.
+Focused implementation time recorded in `docs/TIME_LOG.md`: 64 minutes. End-to-end elapsed time was approximately 2 hours including model generation, builds, authentication and deployment waits. A real phone-photo capture and an optional candidate-recorded replacement voiceover are not included.
 
 ## Next improvement
 
