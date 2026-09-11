@@ -3,6 +3,7 @@ node_modules
 .env*
 !.env.example
 output
+tmp
 work/browser-qa
 .DS_Store
 npm-debug.log*
