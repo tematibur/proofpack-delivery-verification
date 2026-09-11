@@ -9,7 +9,10 @@ export const maxDuration = 60;
 
 const MAX_PDF_BYTES = 8 * 1024 * 1024;
 const MAX_IMAGE_BYTES = 10 * 1024 * 1024;
+const RATE_LIMIT_WINDOW_MS = 60 * 60 * 1000;
+const MAX_RUNS_PER_IP_PER_WINDOW = 12;
 const SUPPORTED_IMAGE_TYPES = new Set(["image/jpeg", "image/png", "image/webp", "image/gif"]);
+const requestTimestamps = new Map<string, number[]>();
 const MODEL_PRICING_USD_PER_MILLION: Record<
   string,
   { input: number; cachedInput: number; output: number }
@@ -42,6 +45,22 @@ const dataUrl = async (file: File) => {
   return `data:${file.type};base64,${base64}`;
 };
 
+const takeRateLimitSlot = (request: Request) => {
+  const forwardedFor = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim();
+  const clientId = forwardedFor || request.headers.get("x-real-ip") || "local";
+  const cutoff = Date.now() - RATE_LIMIT_WINDOW_MS;
+  const recent = (requestTimestamps.get(clientId) ?? []).filter((timestamp) => timestamp > cutoff);
+
+  if (recent.length >= MAX_RUNS_PER_IP_PER_WINDOW) {
+    requestTimestamps.set(clientId, recent);
+    return false;
+  }
+
+  recent.push(Date.now());
+  requestTimestamps.set(clientId, recent);
+  return true;
+};
+
 export async function POST(request: Request) {
   const startedAt = performance.now();
 
@@ -70,6 +89,12 @@ export async function POST(request: Request) {
       return Response.json(
         { error: "Each photo must be JPG, PNG, WEBP or GIF and no larger than 10 MB." },
         { status: 400 }
+      );
+    }
+    if (!takeRateLimitSlot(request)) {
+      return Response.json(
+        { error: "Demo limit reached: try again in one hour." },
+        { status: 429, headers: { "Retry-After": "3600" } }
       );
     }
 

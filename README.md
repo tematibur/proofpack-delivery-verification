@@ -69,6 +69,7 @@ The server validates model output before returning it to the browser. It downgra
 - No warehouse integration, supplier complaint automation, accounts or payments.
 - Bounding boxes come from the vision model and can be approximate; they are evidence pointers, not metrology.
 - No automatic API retries in the prototype. A failed operation is shown to the user and costs must be measured separately if manually retried.
+- The public demo applies a best-effort in-memory limit of 12 valid analysis runs per IP per hour. Serverless cold starts can reset this counter, so the OpenAI project budget remains the hard spending backstop.
 
 ## Reused components and original work
 

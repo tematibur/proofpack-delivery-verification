@@ -71,6 +71,7 @@ Own work: capture protocol, prompt and JSON schema, result validator, evidence o
 - A short real phone-photo capture is still required before an honest hiring submission.
 - Vision-model bounding boxes are approximate and should be treated as evidence pointers.
 - The prototype has no automatic retries, image preprocessing, persistent history, warehouse integration or supplier workflow.
+- The public demo has a best-effort limit of 12 valid runs per IP per hour; the counter can reset on a serverless cold start.
 - Count verification intentionally declines when UNIT labels do not support deduplication.
 
 ## Time spent
