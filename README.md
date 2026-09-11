@@ -53,8 +53,8 @@ The server validates model output before returning it to the browser. It downgra
 
 ## Architecture
 
-1. The browser submits one PDF and one to three images as multipart form data.
-2. A Next.js server route validates file type, count and size.
+1. The browser keeps the original previews but converts large photos to bounded JPEG uploads before building multipart form data.
+2. A Next.js server route validates the prepared file type, count and size.
 3. The OpenAI Responses API reads the PDF and photos in a single multimodal request and returns strict JSON with document rows, conclusions and percentage bounding boxes.
 4. Deterministic server rules validate identity, count evidence, row references and missing-item language.
 5. The browser displays the row result and overlays the returned bounding box on the supporting image.
@@ -63,8 +63,8 @@ The server validates model output before returning it to the browser. It downgra
 ## Scope and limits
 
 - English only.
-- One-page text PDF, maximum five product rows.
-- One to three photographs, maximum 10 MB each.
+- One-page text PDF, maximum five product rows and 1 MB.
+- One to three source photographs, maximum 10 MB each; browser-prepared uploads are capped at 900 KB per photo for the hosted request limit.
 - Printed SKU and UNIT labels required.
 - No warehouse integration, supplier complaint automation, accounts or payments.
 - Bounding boxes come from the vision model and can be approximate; they are evidence pointers, not metrology.

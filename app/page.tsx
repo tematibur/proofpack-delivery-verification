@@ -5,7 +5,10 @@ import { EvidencePanel } from "@/components/evidence-panel";
 import { CheckIcon, HelpIcon, ResetIcon, WarningIcon } from "@/components/icons";
 import { ResultsTable } from "@/components/results-table";
 import { UploadPanel } from "@/components/upload-panel";
+import { preparePhotoForUpload } from "@/lib/prepare-upload";
 import type { VerificationResult } from "@/lib/types";
+
+const MAX_PDF_BYTES = 1024 * 1024;
 
 export default function Home() {
   const [packingList, setPackingList] = useState<File | null>(null);
@@ -40,11 +43,21 @@ export default function Home() {
     setResult(null);
 
     try {
+      if (packingList.size > MAX_PDF_BYTES) {
+        throw new Error("The one-page text PDF must be 1 MB or smaller.");
+      }
+
+      const preparedPhotos = await Promise.all(photos.map(preparePhotoForUpload));
       const form = new FormData();
       form.append("packingList", packingList);
-      photos.forEach((photo) => form.append("photos", photo));
+      preparedPhotos.forEach((photo) => form.append("photos", photo));
       const response = await fetch("/api/verify", { method: "POST", body: form });
-      const body = await response.json();
+      const contentType = response.headers.get("content-type") ?? "";
+      const body = contentType.includes("application/json")
+        ? await response.json()
+        : { error: response.status === 413
+            ? "The upload is too large for the hosted demo. Use a smaller PDF or fewer photos."
+            : (await response.text()) || "Verification failed." };
       if (!response.ok) throw new Error(body.error || "Verification failed.");
       const nextResult = body as VerificationResult;
       setResult(nextResult);

@@ -7,8 +7,8 @@ import { validateAnalysis } from "@/lib/validate-analysis";
 export const runtime = "nodejs";
 export const maxDuration = 60;
 
-const MAX_PDF_BYTES = 8 * 1024 * 1024;
-const MAX_IMAGE_BYTES = 10 * 1024 * 1024;
+const MAX_PDF_BYTES = 1024 * 1024;
+const MAX_IMAGE_BYTES = 1024 * 1024;
 const RATE_LIMIT_WINDOW_MS = 60 * 60 * 1000;
 const MAX_RUNS_PER_IP_PER_WINDOW = 12;
 const SUPPORTED_IMAGE_TYPES = new Set(["image/jpeg", "image/png", "image/webp", "image/gif"]);
@@ -80,14 +80,14 @@ export async function POST(request: Request) {
       return Response.json({ error: "Upload one PDF packing list." }, { status: 400 });
     }
     if (packingList.size > MAX_PDF_BYTES) {
-      return Response.json({ error: "The PDF must be 8 MB or smaller." }, { status: 400 });
+      return Response.json({ error: "The one-page text PDF must be 1 MB or smaller." }, { status: 400 });
     }
     if (photos.length < 1 || photos.length > 3) {
       return Response.json({ error: "Upload between one and three delivery photos." }, { status: 400 });
     }
     if (photos.some((photo) => !SUPPORTED_IMAGE_TYPES.has(photo.type) || photo.size > MAX_IMAGE_BYTES)) {
       return Response.json(
-        { error: "Each photo must be JPG, PNG, WEBP or GIF and no larger than 10 MB." },
+        { error: "Each prepared photo must be JPG, PNG, WEBP or GIF and no larger than 1 MB." },
         { status: 400 }
       );
     }

@@ -37,7 +37,7 @@ export function UploadPanel({
           <span className="file-icon"><FileIcon /></span>
           <span className="file-copy">
             <strong>{packingList?.name ?? "Upload one-page PDF"}</strong>
-            <small>{packingList ? `${Math.ceil(packingList.size / 1024)} KB` : "Up to 8 MB · max 5 rows"}</small>
+            <small>{packingList ? `${Math.ceil(packingList.size / 1024)} KB` : "Up to 1 MB · max 5 rows"}</small>
           </span>
         </label>
       </div>
@@ -71,7 +71,7 @@ export function UploadPanel({
           <UploadIcon />
           <span>
             <strong>{photos.length ? "Replace photos" : "Add photos"}</strong>
-            <small>1–3 JPG, PNG, WEBP or GIF</small>
+            <small>1–3 images · optimized before upload</small>
           </span>
         </label>
       </div>
