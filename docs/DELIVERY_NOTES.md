@@ -25,7 +25,7 @@ Corrected delivery:
 
 ## Actual results
 
-Pending real controlled photographs. Fill this section from the app output without changing the pre-recorded expectations.
+Pending the first live API run. Five AI-generated development fixtures are included under `sample-data/synthetic/`; they are disclosed as synthetic and do not replace the required real controlled photographs. Fill the table from saved app output without changing the pre-recorded expectations.
 
 | Case | Expected | Actual | Evidence/source check | Pass? |
 | --- | --- | --- | --- | --- |
@@ -53,7 +53,7 @@ Speech cost: $0.00 because the selected workflow starts from existing documents 
 
 - Product implementation: Codex desktop; exact task model must be copied from the model selector before submission.
 - Application inference: OpenAI Responses API, `gpt-5.6-sol`, reasoning effort `low`, image detail `high`, strict JSON Schema.
-- Visual design reference: Codex built-in Image Gen; the tool did not expose its underlying model identifier, so it is reported honestly as not exposed rather than guessed.
+- Synthetic development photography: Codex built-in Image Gen in generation/edit mode, using the printable label sheet and prior accepted frame as references. The tool did not expose its underlying model identifier, so it is reported honestly as not exposed rather than guessed.
 
 Example output check: the model response is passed through deterministic validation. A quantity mismatch is downgraded to `Unverified` unless visible quantity differs, exact SKU matches, image evidence exists and enough distinct UNIT IDs support the count. A unit test verifies this downgrade.
 
@@ -65,7 +65,8 @@ Own work: capture protocol, prompt and JSON schema, result validator, evidence o
 
 ## What failed or remains limited
 
-- Live multimodal results are pending the physical test photographs and a configured API key.
+- Live multimodal results are pending a configured API key. The included AI-generated photos are development fixtures, not proof of physical contents.
+- A short real phone-photo capture is still required before an honest hiring submission.
 - Vision-model bounding boxes are approximate and should be treated as evidence pointers.
 - The prototype has no automatic retries, image preprocessing, persistent history, warehouse integration or supplier workflow.
 - Count verification intentionally declines when UNIT labels do not support deduplication.

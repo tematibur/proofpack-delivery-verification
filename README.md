@@ -29,8 +29,10 @@ The default analysis model is `gpt-5.6-sol` with low reasoning. Override it with
 - `sample-data/printable-unit-labels.pdf` - six initial labels and one correction label.
 - `sample-data/expected-findings.json` - expected outcomes recorded before testing.
 - `sample-data/README.md` - physical contents, photo convention and corrected-delivery procedure.
+- `sample-data/synthetic/initial/` - three AI-generated development photos for the mismatch/ambiguity case.
+- `sample-data/synthetic/corrected/` - two AI-generated development photos for the corrected case.
 
-Real photographs are intentionally not generated. Create them from the controlled physical setup and place them in `sample-data/initial/` and `sample-data/corrected/`.
+The synthetic photos are useful for repeatable development and model smoke tests, but they are not evidence of actual physical contents. For the hiring submission, recreate the same controlled setup with real household objects and place the phone photographs in `sample-data/initial/` and `sample-data/corrected/`.
 
 ## Quality checks
 

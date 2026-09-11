@@ -43,3 +43,15 @@ Use the initial photo set with the candle SKU covered. Expected behavior: ask fo
 ## File naming
 
 Place the real photographs under `sample-data/initial/` and `sample-data/corrected/`. Keep the exact filenames above where possible so the test can be reproduced.
+
+## Synthetic development fixtures
+
+AI-generated photos are included under `sample-data/synthetic/`:
+
+- `initial/photo-1-overview.png`
+- `initial/photo-2-labels.png`
+- `initial/photo-3-ambiguity.png`
+- `corrected/photo-1-overview.png`
+- `corrected/photo-2-labels.png`
+
+They follow the same UNIT-ID convention and are suitable for repeatable app tests. They are not photographs of actual physical contents and must be disclosed as synthetic. The assignment explicitly asks for physical contents, so these fixtures do not replace the final phone-photo capture.
