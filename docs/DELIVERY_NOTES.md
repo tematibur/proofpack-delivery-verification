@@ -49,7 +49,7 @@ Pricing assumption used in code for the default `gpt-5.6-luna`: $0.20 per millio
 | Ambiguous single view | 17.09 s | 4,232 | 1,369 | 0 | $0.0025 |
 | **Measured total** | **51.35 s** | **18,342** | **3,691** | **0** | **$0.0081** |
 
-Speech cost: $0.00 because the selected workflow starts from existing documents and photographs, not voice. Paid intermediary cost: $0.00. Hosting cost is reported separately after deployment and is not included in per-operation inference cost.
+Speech cost: $0.00 because the selected product workflow starts from existing documents and photographs, not voice. Paid intermediary cost: $0.00. Hosting is separate: the Vercel deployment produced no observed incremental charge under the existing account; future usage depends on that account's plan and is not included in per-operation inference cost.
 
 ## AI tools and models
 
@@ -78,7 +78,7 @@ Own work: capture protocol, prompt and JSON schema, result validator, evidence o
 
 ## Time spent
 
-Record focused time only. Current implementation log is in `docs/TIME_LOG.md`; copy the final total here before submission.
+Focused implementation time recorded in `docs/TIME_LOG.md`: 52 minutes. End-to-end elapsed time was approximately 1 hour 45 minutes including model generation, builds, authentication and deployment waits. A real phone-photo capture and an optional candidate-recorded replacement voiceover are not included.
 
 ## Next improvement
 
