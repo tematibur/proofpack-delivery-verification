@@ -21,7 +21,7 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000).
 
-The default analysis model is `gpt-5.6-sol` with low reasoning. Override it with `OPENAI_MODEL` if required.
+The default analysis model is `gpt-5.6-luna` with low reasoning and a 4,000-token output cap. Override it with `OPENAI_MODEL` if required.
 
 ## Reproducible test set
 
@@ -31,6 +31,7 @@ The default analysis model is `gpt-5.6-sol` with low reasoning. Override it with
 - `sample-data/README.md` - physical contents, photo convention and corrected-delivery procedure.
 - `sample-data/synthetic/initial/` - three AI-generated development photos for the mismatch/ambiguity case.
 - `sample-data/synthetic/corrected/` - two AI-generated development photos for the corrected case.
+- `sample-data/results/` - raw measured Responses API output for the three synthetic test cases.
 
 The synthetic photos are useful for repeatable development and model smoke tests, but they are not evidence of actual physical contents. For the hiring submission, recreate the same controlled setup with real household objects and place the phone photographs in `sample-data/initial/` and `sample-data/corrected/`.
 

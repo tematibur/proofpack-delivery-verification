@@ -10,6 +10,14 @@ export const maxDuration = 60;
 const MAX_PDF_BYTES = 8 * 1024 * 1024;
 const MAX_IMAGE_BYTES = 10 * 1024 * 1024;
 const SUPPORTED_IMAGE_TYPES = new Set(["image/jpeg", "image/png", "image/webp", "image/gif"]);
+const MODEL_PRICING_USD_PER_MILLION: Record<
+  string,
+  { input: number; cachedInput: number; output: number }
+> = {
+  "gpt-5.6-luna": { input: 0.2, cachedInput: 0.02, output: 1.2 },
+  "gpt-5.6-terra": { input: 2, cachedInput: 0.2, output: 12 },
+  "gpt-5.6-sol": { input: 4, cachedInput: 0.4, output: 20 }
+};
 
 const SYSTEM_PROMPT = `You verify a small delivery against a one-page packing list.
 
@@ -67,7 +75,7 @@ export async function POST(request: Request) {
 
     const packingListUrl = await dataUrl(packingList);
     const photoUrls = await Promise.all(photos.map(dataUrl));
-    const model = process.env.OPENAI_MODEL || "gpt-5.6-sol";
+    const model = process.env.OPENAI_MODEL || "gpt-5.6-luna";
     const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
     const content: ResponseInputContent[] = [
@@ -89,6 +97,7 @@ export async function POST(request: Request) {
     const response = await client.responses.create({
       model,
       reasoning: { effort: "low" },
+      max_output_tokens: 4000,
       instructions: SYSTEM_PROMPT,
       input: [{ role: "user", content }],
       text: {
@@ -111,8 +120,12 @@ export async function POST(request: Request) {
     const outputTokens = usage?.output_tokens ?? 0;
     const cachedInputTokens = usage?.input_tokens_details?.cached_tokens ?? 0;
     const uncachedInputTokens = Math.max(0, inputTokens - cachedInputTokens);
+    const pricing = MODEL_PRICING_USD_PER_MILLION[model] ?? MODEL_PRICING_USD_PER_MILLION["gpt-5.6-sol"];
     const estimatedUsd =
-      (uncachedInputTokens * 4 + cachedInputTokens * 0.4 + outputTokens * 20) / 1_000_000;
+      (uncachedInputTokens * pricing.input +
+        cachedInputTokens * pricing.cachedInput +
+        outputTokens * pricing.output) /
+      1_000_000;
 
     const result: VerificationResult = {
       ...raw,

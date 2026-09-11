@@ -25,34 +25,36 @@ Corrected delivery:
 
 ## Actual results
 
-Pending the first live API run. Five AI-generated development fixtures are included under `sample-data/synthetic/`; they are disclosed as synthetic and do not replace the required real controlled photographs. Fill the table from saved app output without changing the pre-recorded expectations.
+The three measured runs below use the five AI-generated development fixtures under `sample-data/synthetic/`. Raw API responses are committed under `sample-data/results/`. The fixtures are disclosed as synthetic and do not replace the required real controlled photographs.
 
 | Case | Expected | Actual | Evidence/source check | Pass? |
 | --- | --- | --- | --- | --- |
-| Correct mug | Confirmed | Pending | Row 1 + photo region | Pending |
-| Wrong towel SKU | Identity mismatch | Pending | Row 2 + label region | Pending |
-| Extra soap unit | Quantity mismatch, 3 vs 2 | Pending | Row 3 + distinct UNIT IDs | Pending |
-| Obscured candle | Unverified, request photo | Pending | Row 4, no false missing claim | Pending |
-| Corrected delivery | 4 confirmed | Pending | Every row + image region | Pending |
+| Correct mug | Confirmed | Confirmed | Row 1 + two regions for `UNIT-01` | Pass |
+| Wrong towel SKU | Identity mismatch | Identity mismatch | Row 2 + visible `TOWEL-SAND-20` regions | Pass |
+| Extra soap unit | Quantity mismatch, 3 vs 2 | Quantity mismatch, 3 vs 2 | Row 3 + `UNIT-03/04/05` regions | Pass |
+| Obscured candle | Unverified, request photo | Unverified, requested unobscured `UNIT-06` photo | Row 4, no false missing claim | Pass |
+| Corrected delivery | 4 confirmed | 4 confirmed | Every row + image region | Pass |
+| Insufficient single view | Decline unsupported conclusions | 4 unverified + specific photo requests | Rows 1-4; no missing claims | Pass |
 
 ## Speed and variable cost
 
 The app records API wall-clock duration, model, input tokens, cached input tokens, output tokens, retries and estimated USD cost for every operation.
 
-Pricing assumption used in code for `gpt-5.6-sol`: $4.00 per million uncached input tokens, $0.40 per million cached input tokens and $20.00 per million output tokens. Update the constants if pricing changes before submission.
+Pricing assumption used in code for the default `gpt-5.6-luna`: $0.20 per million uncached input tokens, $0.02 per million cached input tokens and $1.20 per million output tokens. The route also contains current Terra and Sol rates and applies a 4,000-token output cap. Update the constants if pricing changes before submission.
 
 | Run | Useful result time | Input tokens | Output tokens | Retries | Estimated variable cost |
 | --- | ---: | ---: | ---: | ---: | ---: |
-| Initial delivery | Pending | Pending | Pending | 0 | Pending |
-| Corrected delivery | Pending | Pending | Pending | 0 | Pending |
-| Ambiguous input | Pending | Pending | Pending | 0 | Pending |
+| Initial delivery | 19.36 s | 7,996 | 1,351 | 0 | $0.0032 |
+| Corrected delivery | 14.90 s | 6,114 | 971 | 0 | $0.0024 |
+| Ambiguous single view | 17.09 s | 4,232 | 1,369 | 0 | $0.0025 |
+| **Measured total** | **51.35 s** | **18,342** | **3,691** | **0** | **$0.0081** |
 
 Speech cost: $0.00 because the selected workflow starts from existing documents and photographs, not voice. Paid intermediary cost: $0.00. Hosting cost is reported separately after deployment and is not included in per-operation inference cost.
 
 ## AI tools and models
 
 - Product implementation: Codex desktop; exact task model must be copied from the model selector before submission.
-- Application inference: OpenAI Responses API, `gpt-5.6-sol`, reasoning effort `low`, image detail `high`, strict JSON Schema.
+- Application inference: OpenAI Responses API, `gpt-5.6-luna`, reasoning effort `low`, image detail `high`, strict JSON Schema and a 4,000-token output cap.
 - Synthetic development photography: Codex built-in Image Gen in generation/edit mode, using the printable label sheet and prior accepted frame as references. The tool did not expose its underlying model identifier, so it is reported honestly as not exposed rather than guessed.
 
 Example output check: the model response is passed through deterministic validation. A quantity mismatch is downgraded to `Unverified` unless visible quantity differs, exact SKU matches, image evidence exists and enough distinct UNIT IDs support the count. A unit test verifies this downgrade.
@@ -65,7 +67,7 @@ Own work: capture protocol, prompt and JSON schema, result validator, evidence o
 
 ## What failed or remains limited
 
-- Live multimodal results are pending a configured API key. The included AI-generated photos are development fixtures, not proof of physical contents.
+- Live multimodal inference passed on all three synthetic cases. The generated photos are development fixtures, not proof of physical contents.
 - A short real phone-photo capture is still required before an honest hiring submission.
 - Vision-model bounding boxes are approximate and should be treated as evidence pointers.
 - The prototype has no automatic retries, image preprocessing, persistent history, warehouse integration or supplier workflow.
