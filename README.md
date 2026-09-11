@@ -78,3 +78,5 @@ Reused: Next.js, React, OpenAI JavaScript SDK, ReportLab, ESLint and TypeScript.
 Original for this assignment: the capture convention, multimodal prompt, strict response schema, safety validator, evidence UI, cost instrumentation, controlled test set, expected outcomes and tests.
 
 See `docs/DELIVERY_NOTES.md` for measured results and `docs/VIDEO_SCRIPT.md` for the walkthrough.
+
+The deployed app also serves the generated 1:25 walkthrough at `/proofpack-walkthrough.mp4`.

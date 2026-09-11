@@ -56,6 +56,7 @@ Speech cost: $0.00 because the selected workflow starts from existing documents 
 - Product implementation: Codex desktop; exact task model must be copied from the model selector before submission.
 - Application inference: OpenAI Responses API, `gpt-5.6-luna`, reasoning effort `low`, image detail `high`, strict JSON Schema and a 4,000-token output cap.
 - Synthetic development photography: Codex built-in Image Gen in generation/edit mode, using the printable label sheet and prior accepted frame as references. The tool did not expose its underlying model identifier, so it is reported honestly as not exposed rather than guessed.
+- Browser QA and walkthrough capture: Playwright CLI. Backup walkthrough assembly: FFmpeg with the local macOS Samantha text-to-speech voice; no paid speech API was used.
 
 Example output check: the model response is passed through deterministic validation. A quantity mismatch is downgraded to `Unverified` unless visible quantity differs, exact SKU matches, image evidence exists and enough distinct UNIT IDs support the count. A unit test verifies this downgrade.
 
@@ -73,6 +74,7 @@ Own work: capture protocol, prompt and JSON schema, result validator, evidence o
 - The prototype has no automatic retries, image preprocessing, persistent history, warehouse integration or supplier workflow.
 - The public demo has a best-effort limit of 12 valid runs per IP per hour; the counter can reset on a serverless cold start.
 - Count verification intentionally declines when UNIT labels do not support deduplication.
+- The generated 1:25 walkthrough uses synthetic narration. A short candidate-recorded voiceover would better demonstrate personal product judgment.
 
 ## Time spent
 

@@ -1,5 +1,7 @@
 # Video walkthrough script (target: 2:30-2:50)
 
+A generated 1:25 backup walkthrough is included at `public/proofpack-walkthrough.mp4`. It uses live browser QA frames, local macOS text-to-speech and FFmpeg. The script below is still recommended for a candidate-recorded version because the role evaluates personal reasoning.
+
 ## 0:00-0:20 - Problem and boundary
 
 "Proofpack compares a one-page packing list with up to three delivery photos. The key product decision is conservative evidence: a missing camera view never becomes a missing-item claim."

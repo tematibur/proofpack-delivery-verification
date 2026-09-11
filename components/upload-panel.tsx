@@ -29,6 +29,9 @@ export function UploadPanel({
           <input
             type="file"
             accept="application/pdf"
+            onClick={(event) => {
+              event.currentTarget.value = "";
+            }}
             onChange={(event) => onPackingList(event.target.files?.[0] ?? null)}
           />
           <span className="file-icon"><FileIcon /></span>
@@ -60,6 +63,9 @@ export function UploadPanel({
             type="file"
             accept="image/jpeg,image/png,image/webp,image/gif"
             multiple
+            onClick={(event) => {
+              event.currentTarget.value = "";
+            }}
             onChange={(event) => onPhotos(Array.from(event.target.files ?? []).slice(0, 3))}
           />
           <UploadIcon />
