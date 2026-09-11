@@ -6,5 +6,6 @@ output
 outputs/
 tmp
 work/
+.playwright-cli/
 .DS_Store
 npm-debug.log*
