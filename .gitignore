@@ -1,0 +1,8 @@
+node_modules
+.next
+.env*
+!.env.example
+output
+work/browser-qa
+.DS_Store
+npm-debug.log*

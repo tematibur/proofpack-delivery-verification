@@ -1,0 +1,17 @@
+{
+  "recordedBeforeTesting": true,
+  "captureConvention": "Every physical object keeps one unique UNIT-XX label attached and visible across overview and close-up photographs.",
+  "initial": {
+    "physicalUnits": 6,
+    "findings": [
+      { "rowNumber": 1, "expectedStatus": "confirmed", "expectedVisibleQuantity": 1 },
+      { "rowNumber": 2, "expectedStatus": "identity_mismatch", "expectedObservedSku": "TOWEL-SAND-20" },
+      { "rowNumber": 3, "expectedStatus": "quantity_mismatch", "expectedVisibleQuantity": 3 },
+      { "rowNumber": 4, "expectedStatus": "unverified", "mustNotClaimMissing": true }
+    ]
+  },
+  "corrected": {
+    "physicalUnits": 5,
+    "expectedSummary": { "confirmed": 4, "mismatch": 0, "unverified": 0 }
+  }
+}
